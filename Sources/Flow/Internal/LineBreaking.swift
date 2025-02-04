@@ -155,6 +155,12 @@ func sizes(of items: IndexedLineBreakingInput, availableSpace: CGFloat) -> SizeC
         items[afterLineBreak].element.spacing = 0
     }
     // Handle manual new line modifier
+
+    // Counts items that should start in a new line
+    // Note: Previously used count(where:) with key path which caused
+    // compilation errors in earlier versions of Xcode.
+    // Changed to filter().count for better compiler support and explicit type handling.
+    // This approach avoids issues with key path type inference and uses standard Swift collection methods.
     let numberOfNewLines = items.filter { $0.element.shouldStartInNewLine }.count
     if numberOfNewLines > 1 {
         return nil
